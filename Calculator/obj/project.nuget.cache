@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "pENWNuK29kw=",
+  "dgSpecHash": "0qO2j79Aebg=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Calculator.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Dev10\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.119\\stub.system.data.sqlite.core.netstandard.1.0.119.nupkg.sha512",
+    "C:\\Users\\Dev10\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512"
+  ],
   "logs": []
 }

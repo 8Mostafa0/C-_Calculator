@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{53962BDD-1DB0-443A-B791-6015A0E722E0}|Calculator.csproj|c:\\users\\dev10\\desktop\\basic to expert c# education\\codes\\e3\\calculator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{53962BDD-1DB0-443A-B791-6015A0E722E0}|Calculator.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|c:\\users\\dev10\\desktop\\basic to expert c# education\\codes\\e3\\calculator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|c:\\users\\dev10\\desktop\\basic to expert c# education\\codes\\e3\\calculator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|c:\\users\\dev10\\desktop\\basic to expert c# education\\codes\\e3\\calculator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F817A2FE-88E3-3460-E768-EDE46A78B465}|Calculator.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +27,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAGMBAAAAAAAAAAAqwIABAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T14:50:27.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Form1.cs [Design]",
               "RelativeToolTip": "Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-09T11:21:31.346Z",
+              "WhenOpened": "2026-02-09T14:50:23.687Z",
               "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Dev10\\Desktop\\basic to expert C# education\\Codes\\e3\\Calculator\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T14:50:21.039Z",
+              "EditorCaption": ""
             }
           ]
         }
