@@ -12,10 +12,10 @@ namespace Calculator
         static string valid_input_data = "";
         History database = new History();
         Operations_Class Operation = new Operations_Class();
-        
+
         public Form1()
         {
-            
+
             InitializeComponent();
             new list_style().Set_histoey_headers(history_list);
             database.check_tables();
@@ -34,17 +34,7 @@ namespace Calculator
         private void Add_Text_To_Math_Text(char charecter)
         {
             bool error = false;
-            if (this.Math_Text.Count() > 0)
-            {
-                if (!Operation.Validation_Math_Text(this.Math_Text + charecter))
-                {
-                    error = true;
-                }
-            }
-            else if (!char.IsDigit(charecter))
-            {
-                error = true;
-            }
+            error = !Operation.Validation_Math_Text(this.Math_Text, charecter);
 
             if (error)
             {
@@ -86,14 +76,22 @@ namespace Calculator
         //calculate key
         private void button2_Click(object sender, EventArgs e)
         {
-            Last_Equation_Text = this.Math_Text;
-            double? result = Operation.Main_Calculation_Part(this.Math_Text);
-            if (result!= null)
+            if (Operation.Validate_Parantesis(this.Math_Text))
             {
-                database.insert_to_history(Last_Equation_Text, Last_Equation_Result);
+                Last_Equation_Text = this.Math_Text;
+                double? result = Operation.Main_Calculation_Part(this.Math_Text);
+                if (result != null)
+                {
+                    Last_Equation_Result = result.Value.ToString();
+                    database.insert_to_history(Last_Equation_Text, Last_Equation_Result);
+                }
+                show_history();
+                clear_math_text();
             }
-            show_history();
-            clear_math_text();
+            else
+            {
+                MessageBox.Show("لطفا پردانتز را ببندید", "خطا");
+            }
         }
         //show result in text box
         private void show_result()
@@ -226,6 +224,18 @@ namespace Calculator
                 tb_result.Text = tb_result.Text.Substring(0, tb_result.Text.Count());
                 tb_result.Refresh();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            Add_Text_To_Math_Text('(');
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            Add_Text_To_Math_Text(')');
         }
     }
 }

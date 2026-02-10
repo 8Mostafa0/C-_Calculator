@@ -1,7 +1,11 @@
-﻿namespace Calculator.Backend
+﻿using Calculator.Backend.Classes;
+
+namespace Calculator.Backend
 {
     public class Operations_Class
     {
+        string valid_numbers = "1234567890)(";
+        string valid_charecters = ".+-*/^%";
 
         // check charecter is number or math operation charecter
         private bool Is_Number(char charecter)
@@ -30,16 +34,47 @@
 
 
         //do validation check on math text to find out problems
-        public bool Validation_Math_Text(string text)
+        public bool Validation_Math_Text(string equation, char new_charecter)
         {
-            if (text.Count() > 1)
+            if (equation.Length == 0)
             {
-                if (!Validate_Parantesis(text))
+                if (valid_numbers.Contains(new_charecter))
+                {
+                    return true;
+                }
+                else if (valid_charecters.Contains(new_charecter))
+                {
+                    return false;
+                }
+                else
                 {
                     return false;
                 }
             }
-            return true;
+            else
+            {
+                if (valid_charecters.Contains(equation[^1]) && valid_charecters.Contains(new_charecter))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+        }
+        //check any operator left in the equation or not
+        private bool operations_exist_in_equations_text(string text)
+        {
+            foreach (char c in valid_charecters)
+            {
+                if (text.Contains(c))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //replace math string parantesis with result its equations
@@ -57,11 +92,10 @@
                 while (Find_Parantesis(text))
                 {
                     Tuple<int, int> parantesis = Get_Parantesis_Data(text);
-                    result = Calculate(text.Substring(parantesis.Item1 + 1, parantesis.Item2 - 1));
+                    result = Calculate(text.Substring(parantesis.Item1 + 1, parantesis.Item2 - 2));
                     text = Replace_parentesis_value(text, parantesis.Item1, parantesis.Item2, result.ToString());
                 }
                 result = Calculate(text);
-                MessageBox.Show(result.ToString(), "resut");
                 return result;
             }
             catch (Exception)
@@ -69,6 +103,54 @@
                 return null;
             }
         }
+
+
+        private List<Equation_Order> Sort_all_Numbers(string text)
+        {
+            List<Equation_Order> numbers = new List<Equation_Order>();
+            string num1 = "";
+            Equation_Order equation = new Equation_Order();
+            double last_number = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (char.IsDigit(text[i]) || text[i] == '.')
+                {
+                    num1 += text[i];
+                }
+                else
+                {
+                    if (numbers.Count() > 0)
+                    {
+                        if(equation.Second_Value == null)
+                        {
+                            equation.First_Value = last_number;
+                            equation.Second_Value = double.Parse(num1);
+                        }
+                    }
+                    else
+                    {
+                        if (equation.First_Value == null)
+                        {
+                            equation.First_Value = double.Parse(num1);
+                        }
+                        else if (equation.Second_Value == null)
+                        {
+                            equation.Second_Value = double.Parse(num1);
+                        }
+                        equation.Operator = text[i];
+                        if (equation.First_Value != null && equation.Second_Value != null)
+                        {
+                            last_number = equation.Second_Value;
+                            numbers.Add(equation);
+                            equation = new Equation_Order();
+                        }
+
+                    }
+                }
+            }
+            return numbers;
+        }
+
 
         //start calculation based on orders
         private double Calculate(string text)
@@ -79,37 +161,12 @@
             bool first_number_filled = false;
             string second_number = "";
             int index = 0;
-            foreach (char item in text)
-            {
-                if (!first_number_filled)
-                {
-                    if (Is_Number(item))
-                    {
-                        first_number += item;
-                    }
-                    else
-                    {
-                        first_number_filled = true;
-                        last_operation = item;
-                    }
-                }
-                else
-                {
-                    if (Is_Number(item))
-                    {
-                        second_number += item;
-                    }
-                    else
-                    {
-                        first_number = Do_Operation(Convert.ToDouble(first_number), Convert.ToDouble(second_number), last_operation).ToString();
-                        second_number = "";
-                    }
-                }
-                index++;
+            if (operations_exist_in_equations_text(text))
+            {//TODO:// 
             }
-            if (index == text.Count())
+            else
             {
-                result = Do_Operation(Convert.ToDouble(first_number), Convert.ToDouble(second_number), last_operation);
+                result = double.Parse(text);
             }
             return result;
         }
@@ -131,27 +188,31 @@
         //find start index of parantesis and len of it
         private Tuple<int, int> Get_Parantesis_Data(string Text)
         {
-            int index = 0;
             int index_start = 0;
+            int index_end = 0;
             int len = 0;
-            foreach (char item in Text)
+            for (int i = 0; i < Text.Length; i++)
             {
-                if (item == '(')
+                if (Text[i] == ')')
                 {
-                    index_start = index;
-                }
-                else if (item == ')')
-                {
-                    len = index - index_start;
+                    index_end = i;
                     break;
                 }
-                index++;
             }
+            for (int i = index_end; i > 0; i--)
+            {
+                if (Text[i] == '(')
+                {
+                    index_start = i;
+                    break;
+                }
+            }
+            len = index_end - index_start;
             return Tuple.Create(index_start, len + 1);
         }
 
         //validate if parantesis exist the count of opens are equal to closed one or not
-        private bool Validate_Parantesis(string Text)
+        public bool Validate_Parantesis(string Text)
         {
             if (Text.Count(l => l == '(') == Text.Count(l => l == ')'))
             {
