@@ -1,8 +1,8 @@
-﻿using Calculator.Classes;
+﻿using Calculator.Backend.Classes;
 using System.Data.SQLite;
-namespace Calculator.Database
+namespace Calculator.Backend.Database
 {
-    internal class history
+    internal class History
     {
         private static string database_file = "history.db";
 

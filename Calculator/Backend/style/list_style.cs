@@ -1,5 +1,4 @@
-﻿
-namespace Calculator.style
+﻿namespace Calculator.Backend.style
 {
     internal class list_style
     {

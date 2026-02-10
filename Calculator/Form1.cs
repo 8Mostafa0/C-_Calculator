@@ -1,7 +1,7 @@
-﻿using Calculator.Classes;
-using Calculator.Database;
-using Calculator.style;
-
+﻿using Calculator.Backend;
+using Calculator.Backend.Classes;
+using Calculator.Backend.Database;
+using Calculator.Backend.style;
 namespace Calculator
 {
     public partial class Form1 : Form
@@ -9,10 +9,13 @@ namespace Calculator
         string Math_Text = "";
         string Last_Equation_Result = "";
         string Last_Equation_Text = "";
-        history database = new history();
         static string valid_input_data = "";
+        History database = new History();
+        Operations_Class Operation = new Operations_Class();
+        
         public Form1()
         {
+            
             InitializeComponent();
             new list_style().Set_histoey_headers(history_list);
             database.check_tables();
@@ -27,174 +30,13 @@ namespace Calculator
         }
 
 
-        // check charecter is number or math operation charecter
-        private bool Is_Number(char charecter)
-        {
-            if (charecter == '.')
-            {
-                return true;
-            }
-            return char.IsLetterOrDigit(charecter);
-        }
-
-        // do math of two numbers based on the opration
-        private double Do_Operation(double number_1, double number_2, char operation)
-        {
-            switch (operation)
-            {
-                case '+': { return number_1 + number_2; }
-                case '-': { return number_1 - number_2; }
-                case '/': { return number_1 / number_2; }
-                case '*': { return number_1 * number_2; }
-                case '^': { return Math.Pow(number_1, number_2); }
-                case '%': { return (number_1 / number_2) * 100; }
-                default: { return number_1; }
-            }
-        }
-
-
-        //do validation check on math text to find out problems
-        private bool Validation_Math_Text(string text)
-        {
-            if (this.Math_Text.Count() > 1)
-            {
-                if (!Validate_Parantesis(text))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        //replace math string parantesis with result its equations
-        private string Replace_parentesis_value(string text, int start, int count, string replacement)
-        {
-            return text.Substring(0, start) + replacement + text.Substring(start + count);
-        }
-
-        //main part of calculation
-        private bool Main_Calculation_Part()
-        {
-            try
-            {
-                double result = 0;
-                while (Find_Parantesis(this.Math_Text))
-                {
-                    Tuple<int, int> parantesis = Get_Parantesis_Data(this.Math_Text);
-                    result = Calculate(this.Math_Text.Substring(parantesis.Item1 + 1, parantesis.Item2 - 1));
-                    this.Math_Text = Replace_parentesis_value(this.Math_Text, parantesis.Item1, parantesis.Item2, result.ToString());
-                }
-                result = Calculate(this.Math_Text);
-                MessageBox.Show(result.ToString(), "resut");
-                this.Last_Equation_Result = result.ToString();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        //start calculation based on orders
-        private double Calculate(string text)
-        {
-            double result = 0;
-            char last_operation = '+';
-            string first_number = "";
-            bool first_number_filled = false;
-            string second_number = "";
-            int index = 0;
-            foreach (char item in text)
-            {
-                if (!first_number_filled)
-                {
-                    if (Is_Number(item))
-                    {
-                        first_number += item;
-                    }
-                    else
-                    {
-                        first_number_filled = true;
-                        last_operation = item;
-                    }
-                }
-                else
-                {
-                    if (Is_Number(item))
-                    {
-                        second_number += item;
-                    }
-                    else
-                    {
-                        first_number = Do_Operation(Convert.ToDouble(first_number), Convert.ToDouble(second_number), last_operation).ToString();
-                        second_number = "";
-                    }
-                }
-                index++;
-            }
-            if (index == text.Count())
-            {
-                result = Do_Operation(Convert.ToDouble(first_number), Convert.ToDouble(second_number), last_operation);
-            }
-            return result;
-        }
-
-
-        //check ther is parantesis in the text or not
-        private bool Find_Parantesis(string Text)
-        {
-            if (Text.Contains('(') && Text.Contains(')'))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        //find start index of parantesis and len of it
-        private Tuple<int, int> Get_Parantesis_Data(string Text)
-        {
-            int index = 0;
-            int index_start = 0;
-            int len = 0;
-            foreach (char item in Text)
-            {
-                if (item == '(')
-                {
-                    index_start = index;
-                }
-                else if (item == ')')
-                {
-                    len = index - index_start;
-                    break;
-                }
-                index++;
-            }
-            return Tuple.Create(index_start, len + 1);
-        }
-
-        //validate if parantesis exist the count of opens are equal to closed one or not
-        private bool Validate_Parantesis(string Text)
-        {
-            if (Text.Count(l => l == '(') == Text.Count(l => l == ')'))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         //add number or operation charecters to math text
         private void Add_Text_To_Math_Text(char charecter)
         {
             bool error = false;
             if (this.Math_Text.Count() > 0)
             {
-                if (!Validation_Math_Text(this.Math_Text + charecter))
+                if (!Operation.Validation_Math_Text(this.Math_Text + charecter))
                 {
                     error = true;
                 }
@@ -245,8 +87,8 @@ namespace Calculator
         private void button2_Click(object sender, EventArgs e)
         {
             Last_Equation_Text = this.Math_Text;
-            bool result = Main_Calculation_Part();
-            if (result)
+            double? result = Operation.Main_Calculation_Part(this.Math_Text);
+            if (result!= null)
             {
                 database.insert_to_history(Last_Equation_Text, Last_Equation_Result);
             }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Calculator.Classes
+﻿namespace Calculator.Backend.Classes
 {
     internal class Equation
     {
